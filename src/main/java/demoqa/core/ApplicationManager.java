@@ -35,10 +35,10 @@ public class ApplicationManager {
             throw new IllegalArgumentException("❌ Некорректный браузер: " + browser + ". Доступные варианты: chrome, firefox, edge, safari.");
         }
         driver.get("https://demoqa.com/");
-        driver.manage().window().setPosition(new Point(2500, 0));
+        //driver.manage().window().setPosition(new Point(2500, 0));
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
-        wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     public void stop() {
