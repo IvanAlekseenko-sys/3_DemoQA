@@ -20,4 +20,20 @@ public class LoginTests extends TestBase {
                 .clickOnLoginButton()
                 .verifySuccessfulLogin();
     }
+
+    @Test
+    public void loginNegativePasswordTest() {
+        new LoginPage(app.driver, app.wait)
+                .enterPersonalWrongPasswordData("tomsmith", "wrongPassword")
+                .clickOnLoginButton()
+                .verifyUnSuccessfulLogin();
+    }
+
+    @Test
+    public void loginNegativeEmptyFieldsTest() {
+        new LoginPage(app.driver, app.wait)
+                .enterPersonalEmptyFieldsData("", "")
+                .clickOnLoginButton()
+                .verifyUnSuccessfulLogin();
+    }
 }

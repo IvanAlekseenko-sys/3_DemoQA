@@ -19,4 +19,12 @@ public class ProfilePage extends BasePage {
         Assert.assertTrue(logOutButton.isDisplayed());
         return this;
     }
+
+    @FindBy(id = "flash")
+    WebElement flash;
+
+    public ProfilePage verifyUnSuccessfulLogin() {
+        Assert.assertTrue(flash.isDisplayed());
+        return this;
+    }
 }
