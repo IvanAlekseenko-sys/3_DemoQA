@@ -10,21 +10,22 @@ import java.lang.reflect.Method;
 
 public class TestBase {
     protected final ApplicationManager app = new herokuapp.core.ApplicationManager();
-
+    public BasePage basePage;
     Logger logger = LoggerFactory.getLogger(TestBase.class);
 
     @BeforeMethod
     public void setUp(Method method) {
         logger.info("Test is started: [" + method.getName() + "]");
         app.init();
+        basePage = new BasePage(app.driver, app.wait);
     }
 
-    @AfterMethod(enabled = false)
+    @AfterMethod(enabled = true)
     public void tearDown(Method method, ITestResult result) {
         if (result.isSuccess()) {
             logger.info("Test is PASSED: [" + method.getName() + "]");
         } else {
-            logger.error("Test is FAILED: [" + method.getName() + "]");
+            logger.error("Test is FAILED: [" + method.getName() + basePage.takeScreenshot() + "]");
         }
         app.stop();
     }

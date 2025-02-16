@@ -1,0 +1,29 @@
+<configuration>
+    <timestamp key="bySecond" datePattern="yyyyMMdd_HHmmss"/>
+
+    <!-- Консольный вывод -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %class.%method - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Файловый вывод -->
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>src/test-logs/log-${bySecond}.log</file>
+        <append>true</append>
+        <immediateFlush>true</immediateFlush>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} -%kvp- %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Фильтр для TestNG -->
+    <logger name="org.testng.internal.Utils" level="WARN"/>
+
+    <!-- Корневой логгер -->
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>

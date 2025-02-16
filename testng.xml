@@ -1,0 +1,18 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="All Suites">
+    <!-- DemoQA -->
+    <test name="DemoQA Tests">
+        <classes>
+            <class name="demoqa.alert_frame_windows.AlertsTests"/>
+            <class name="demoqa.book_store.LoginTests"/>
+            <class name="demoqa.book_store.SearchBooksTests"/>
+        </classes>
+    </test>
+
+    <!-- Herokuapp -->
+    <test name="Herokuapp Tests">
+        <classes>
+            <class name="herokuapp.form_authentication.LoginTests"/>
+        </classes>
+    </test>
+</suite>

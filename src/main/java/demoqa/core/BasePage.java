@@ -55,6 +55,7 @@ public class BasePage {
     }
 
     public String takeScreenshot() {
+        System.out.println("🟢 Method takeScreenshot() called!");
         // Check for alert before taking the screenshot
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5)); // Timeout for alert detection
