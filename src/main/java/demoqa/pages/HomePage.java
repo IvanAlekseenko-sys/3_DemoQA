@@ -25,7 +25,7 @@ public class HomePage extends BasePage {
     @FindBy(css = ".top-card:nth-child(3)")
     WebElement alertsFrameWindows;
     public BasePage getAlertFrameWindows() {
-        click(alertsFrameWindows);
+        clickWithJS(alertsFrameWindows,0,200);
         return new SidePanel(driver,wait);
     }
 }

@@ -1,6 +1,5 @@
 package demoqa.core;
 
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -16,7 +15,7 @@ public class ApplicationManager {
     public WebDriverWait wait;
 
     public void init() {
-        String browser = System.getProperty("browser","chrome");
+        String browser = System.getProperty("browser", "chrome");
         if (browser.equalsIgnoreCase("chrome")) {
             driver = new ChromeDriver();
         } else if (browser.equalsIgnoreCase("chrome_headless")) {
