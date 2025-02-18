@@ -9,7 +9,7 @@ import org.testng.annotations.BeforeMethod;
 import java.lang.reflect.Method;
 
 public class TestBase {
-    protected final ApplicationManager app = new ApplicationManager();
+    protected final ApplicationManager1 app = new ApplicationManager1();
     private BasePage basePage;
     Logger logger = LoggerFactory.getLogger(TestBase.class);
 

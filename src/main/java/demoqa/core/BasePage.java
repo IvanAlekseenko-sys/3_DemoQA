@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import com.google.common.io.Files;
+import org.testng.Assert;
+
 import java.io.IOException;
 import java.time.Duration;
 
@@ -48,6 +50,10 @@ public class BasePage {
         js.executeScript("window.scrollBy(" + x + "," + y + ")");
         click(element);
     }
+    public void scrollTo (int y){
+        js.executeScript("window.scrollBy(0," + y + ")");
+
+    }
 
     public void hideAds() {
         js.executeScript("document.getElementById('adplus-anchor').style.display='none';");
@@ -55,7 +61,6 @@ public class BasePage {
     }
 
     public String takeScreenshot() {
-        System.out.println("🟢 Method takeScreenshot() called!");
         // Check for alert before taking the screenshot
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5)); // Timeout for alert detection
@@ -78,5 +83,16 @@ public class BasePage {
         }
         System.out.println("Screenshot saved to: [" + screenshot.getAbsolutePath() + "]");
         return screenshot.getAbsolutePath();
+    }
+
+    protected void shouldHaveText(WebElement element, String text, int timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(timeout));
+        try {
+            boolean isTextPresent = wait.until(ExpectedConditions.textToBePresentInElement(element, text));
+            Assert.assertTrue(isTextPresent, "Expected text: [" + text + "], actual text in element: [" + element.getText() + "] in element: [" + element + "]");
+        } catch (TimeoutException e) {
+            throw new AssertionError("Text not found in element: [" + element + "], was text:[" + element.getText() + "]", e);
+        }
+
     }
 }

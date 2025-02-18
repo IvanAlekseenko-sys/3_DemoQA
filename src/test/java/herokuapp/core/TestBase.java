@@ -20,7 +20,7 @@ public class TestBase {
         basePage = new BasePage(app.driver, app.wait);
     }
 
-    @AfterMethod(enabled = true)
+    @AfterMethod(enabled = false)
     public void tearDown(Method method, ITestResult result) {
         if (result.isSuccess()) {
             logger.info("Test is PASSED: [" + method.getName() + "]");

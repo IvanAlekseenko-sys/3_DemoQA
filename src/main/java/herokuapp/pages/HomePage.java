@@ -18,4 +18,19 @@ public class HomePage extends BasePage {
         clickWithJS(authForm, 0, 500);
         return new LoginPage(driver, wait);
     }
+
+    @FindBy(xpath = "//a[contains(text(),'Nested Frames')]")
+    WebElement nestedFrames;
+
+    public NestedFramesPage getNestedFrames() {
+        click(nestedFrames);
+        return new NestedFramesPage(driver, wait);
+    }
+
+    @FindBy(xpath = "//a[contains(text(),'Multiple Windows')]")
+    WebElement multipleWindows;
+    public MultipleWindows getMultipleWindows() {
+        clickWithJS(multipleWindows,0,500);
+        return new MultipleWindows(driver,wait);
+    }
 }
