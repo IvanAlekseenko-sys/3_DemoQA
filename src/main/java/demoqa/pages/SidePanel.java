@@ -51,8 +51,29 @@ public class SidePanel extends BasePage {
     //*Select Menu
     @FindBy(xpath = "//span[.='Select Menu']")
     WebElement selectMenu;
+
     public WidgetsPage selectSelectMenu() {
         clickWithJS(selectMenu, 0, 800);
         return new WidgetsPage(driver, wait);
     }
+
+
+    //*Select Menu
+    @FindBy(xpath = "//span[.='Slider']")
+    WebElement sliderMenu;
+
+    public SliderPage selectSliderMenu() {
+        clickWithJS(sliderMenu, 0, 800);
+        return new SliderPage(driver, wait);
+    }
+
+    //* Tool Tips
+    @FindBy(xpath = "//span[.='Tool Tips']")
+    WebElement toolTips;
+
+    public ToolTipsPage selectToolTipsMenu() {
+        clickWithJS(toolTips, 0, 800);
+        return new ToolTipsPage(driver, wait);
+    }
+
 }

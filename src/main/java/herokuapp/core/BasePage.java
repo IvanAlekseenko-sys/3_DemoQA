@@ -64,4 +64,13 @@ public class BasePage {
         }
 
     }
+
+    public void scrollTo(int y) {
+        js.executeScript("window.scrollBy(0," + y + ")");
+
+    }
+
+    public boolean isElementPresent(By locator) {
+        return !driver.findElements(locator).isEmpty();
+    }
 }

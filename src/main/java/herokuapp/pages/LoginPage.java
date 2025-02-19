@@ -21,6 +21,7 @@ public class LoginPage extends BasePage {
         type(userPassword, "SuperSecretPassword!");
         return this;
     }
+
     public LoginPage enterPersonalWrongPasswordData(String user, String password) {
         type(userName, "tomsmith");
         type(userPassword, "WrongSecretPassword!");
@@ -35,8 +36,9 @@ public class LoginPage extends BasePage {
 
     @FindBy(tagName = "i")
     WebElement loginButton;
+
     public ProfilePage clickOnLoginButton() {
         click(loginButton);
-        return new ProfilePage(driver,wait);
+        return new ProfilePage(driver, wait);
     }
 }

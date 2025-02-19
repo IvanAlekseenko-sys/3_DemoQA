@@ -1,6 +1,5 @@
 package herokuapp.pages;
 
-import demoqa.pages.BrowserWindowsPage;
 import herokuapp.core.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

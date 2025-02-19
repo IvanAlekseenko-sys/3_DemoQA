@@ -2,6 +2,7 @@ package demoqa.widgets;
 
 import demoqa.core.TestBase;
 import demoqa.pages.HomePage;
+import demoqa.pages.SelectMenuPage;
 import demoqa.pages.SidePanel;
 import demoqa.pages.WidgetsPage;
 import org.testng.annotations.BeforeMethod;
@@ -19,6 +20,24 @@ public class SelectMenuTests extends TestBase {
         new WidgetsPage(app.driver, app.wait)
                 .selectOldStyleMenu("Indigo")
         ;
+    }
+
+    @Test
+    public void multiSelectPositiveTest() {
+        String[] colors = {"Green", "Blue"};
+        new SelectMenuPage(app.driver, app.wait)
+                .multiSelect(colors)
+                .verifyColorSelected(colors)
+        ;
+    }
+
+    @Test
+    public void standardMultiSelectByCarsPositiveTest() {
+        String[] cars = {"Volvo", "Opel"};
+        new SelectMenuPage(app.driver, app.wait)
+                .standardMultiSelectByCars(cars)
+                .verifyMultiSelectByCars(cars);
+
     }
 
 }

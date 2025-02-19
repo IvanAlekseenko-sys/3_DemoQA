@@ -21,8 +21,37 @@ public class NestedFramesTests extends TestBase {
     @Test
     public void switchToIframeByIndexPositiveTest() {
         new NestedFramesPage(app.driver, app.wait)
-                .switchToIframeByIndex(0)
-                //.verifyIframeText("LEFT")
+                .switchToIframeByIndex(1)
+                .verifyIframeText("BOTTOM")
+        ;
+    }
+
+    @Test
+    public void switchToIframeByNamePositiveTest() {
+        new NestedFramesPage(app.driver, app.wait)
+                .switchToIframeByNamePositiveTest("frame-bottom")
+                .verifyIframeText("BOTTOM")
+        ;
+    }
+
+    @Test
+    public void switchToLeftIframeByNamePositiveTest() {
+        new NestedFramesPage(app.driver, app.wait)
+                .switchToIframeByNamePositiveTest("frame-top")
+                .switchToIframeByNamePositiveTest("frame-left")
+                .verifyIframeText("LEFT")
+                .stepUp()
+                .switchToIframeByNamePositiveTest("frame-middle")
+                .verifyIframeText("MIDDLE")
+                .stepUp()
+                .switchToIframeByNamePositiveTest("frame-right")
+                .verifyIframeText("RIGHT")
+                .exitFromAllFrames()
+                .switchToIframeByNamePositiveTest("frame-bottom")
+                .verifyIframeText("BOTTOM")
+
+
+
         ;
     }
 }

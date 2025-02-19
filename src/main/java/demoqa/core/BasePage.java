@@ -1,14 +1,13 @@
 package demoqa.core;
 
+import com.google.common.io.Files;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.io.File;
-import com.google.common.io.Files;
 import org.testng.Assert;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 
@@ -50,7 +49,8 @@ public class BasePage {
         js.executeScript("window.scrollBy(" + x + "," + y + ")");
         click(element);
     }
-    public void scrollTo (int y){
+
+    public void scrollTo(int y) {
         js.executeScript("window.scrollBy(0," + y + ")");
 
     }
@@ -93,6 +93,10 @@ public class BasePage {
         } catch (TimeoutException e) {
             throw new AssertionError("Text not found in element: [" + element + "], was text:[" + element.getText() + "]", e);
         }
+
+    }
+
+    public void pause() {
 
     }
 }

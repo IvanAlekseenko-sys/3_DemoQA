@@ -32,6 +32,7 @@ public class BrowserWindowsPage extends BasePage {
 
     public BrowserWindowsPage verifyTabTitle(String text) {
         shouldHaveText(sampleHeading, text, 5000);
+        driver.close();
         return this;
 
     }

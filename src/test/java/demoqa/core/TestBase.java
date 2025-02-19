@@ -9,7 +9,7 @@ import org.testng.annotations.BeforeMethod;
 import java.lang.reflect.Method;
 
 public class TestBase {
-    protected final ApplicationManager1 app = new ApplicationManager1();
+    protected final ApplicationManager app = new ApplicationManager();
     private BasePage basePage;
     Logger logger = LoggerFactory.getLogger(TestBase.class);
 
@@ -20,7 +20,14 @@ public class TestBase {
         basePage = new BasePage(app.driver, app.wait);
     }
 
-    @AfterMethod
+    public void pause(int millis){
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @AfterMethod (enabled = false)
     public void tearDown(Method method, ITestResult result) {
         try {
             if (!result.isSuccess()) {
