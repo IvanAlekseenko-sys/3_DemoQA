@@ -6,15 +6,23 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 
 public class BasePage {
     public WebDriver driver;
     public WebDriverWait wait;
     public JavascriptExecutor js;
+
+    //Переменная хранит счетчик ссылок
+    public int linkCounter = 0;
+    private SoftAssert softAssert = new SoftAssert();
 
     public BasePage(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
@@ -72,5 +80,54 @@ public class BasePage {
 
     public boolean isElementPresent(By locator) {
         return !driver.findElements(locator).isEmpty();
+    }
+    public boolean isElementPresent(WebElement element) {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(element));
+            System.out.println("Element "+element.getText() + " is present: " + element.isDisplayed());
+            return element.isDisplayed();
+        } catch (Exception e) {
+            System.out.println("Element "+element.getText() + " is not present: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public void verifyLink(String urlText,String urlToCheck) {
+        linkCounter++;
+
+        // 100 - 399 успех
+        // >= 400 - битая ссылка
+
+        try {
+            URL url = new URL(urlToCheck);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            try {
+                connection.setConnectTimeout(1000); //таймаут если ссылка битая
+                connection.setReadTimeout(1000); // таймаут на чтение если сервер занят
+                connection.setRequestMethod("GET");
+                connection.connect(); // Открыть соединение
+
+                int responseCode = connection.getResponseCode();
+                String responseMessage = connection.getResponseMessage();
+
+                if (responseCode >= 400) {
+                    System.err.println("❌ URL #" + linkCounter + ": ["+urlText+"], URL: [" + urlToCheck + "], response code: [" + responseCode + "], message: [" + responseMessage + "] -> Broken link");
+                    softAssert.fail("❌ Broken link: [" + urlToCheck + "] Code: [" + responseCode + "] Message: [" + responseMessage + "]");
+                } else {
+                    System.out.println("✅ URL #" + linkCounter + ": ["+urlText+"], URL: [" + urlToCheck + "], response code: [" + responseCode + "], message: [" + responseMessage + "] -> Valid link");
+                }
+
+            } finally {
+                connection.disconnect(); // Закрыть соединение
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void assertAll() {
+        softAssert.assertAll();
     }
 }

@@ -52,4 +52,36 @@ public class HomePage extends BasePage {
         Actions actions = new Actions(driver);
         actions.click(hoversPage).perform();
     }
+
+    @FindBy(xpath = "//a[contains(text(),'Drag and Drop')]")
+    WebElement dragAndDrop;
+
+    public DragAndDropPage getDragAndDrop() {
+
+        click(dragAndDrop);
+        return new DragAndDropPage(driver, wait);
+
+    }
+
+    @FindBy(xpath = "//a[contains(text(),'Key Presses')]")
+    WebElement keyPresses;
+
+    public KeyPressPage getKeyPresses() {
+
+        click(keyPresses);
+        return new KeyPressPage(driver, wait);
+
+    }
+
+
+    @FindBy(xpath = "//a[contains(text(),'Status Codes')]")
+    WebElement statusCodes;
+
+    public KeyPressPage getStatusCodes() {
+
+        click(statusCodes);
+        return new KeyPressPage(driver, wait);
+
+    }
+
 }
