@@ -2,6 +2,8 @@ package herokuapp.disappearing_elements;
 
 import herokuapp.core.TestBase;
 import herokuapp.pages.DisappearingElementsPage;
+import herokuapp.utils.RetryAnalyser;
+import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -14,7 +16,7 @@ public class DisappearingElementsTests extends TestBase {
         app.driver.get(HOME_PAGE_URL + "/disappearing_elements");
     }
 
-    @Test
+    @Test(retryAnalyzer = RetryAnalyser.class)
     public void disappearingElementsTestsPositiveTest() {
         new DisappearingElementsPage(app.driver, app.wait)
                 .checkDisappearingElement("Gallery");

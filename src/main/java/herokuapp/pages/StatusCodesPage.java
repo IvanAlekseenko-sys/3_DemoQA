@@ -16,13 +16,15 @@ public class StatusCodesPage extends BasePage {
     @FindBy(css = "a")
     List<WebElement> allLinks;
 
+    // Переменная хранит счётчик ссылок
+    private int linkCounter = 0;
 
     public StatusCodesPage checkAllURL() {
         System.out.println("🔗 Общее количество ссылок на странице: [" + allLinks.size() + "]");
         for (WebElement link : allLinks) {
             linkCounter++;
-            String urlText = link.getText().trim(); //хранит текст ссылки
-            String href = link.getAttribute("href");//хранит саму ссылку
+            String urlText = link.getText().trim(); // Хранит текст ссылки
+            String href = link.getAttribute("href"); // Хранит саму ссылку
             System.out.println("🔗 Link " + linkCounter + ": [" + (!urlText.isEmpty() ? urlText : (href != null && !href.isEmpty() ? href : "null")) + "], URL: [" + (href != null ? href : "null") + "]");
         }
         return this;
@@ -31,7 +33,7 @@ public class StatusCodesPage extends BasePage {
     public StatusCodesPage checkBrokenLinks() {
         System.out.println("🔍 Общее количество ссылок на странице: [" + allLinks.size() + "]");
         for (WebElement link : allLinks) {
-            String urlText = link.getText().trim(); //хранит текст ссылки
+            String urlText = link.getText().trim(); // Хранит текст ссылки
             String linkURL = link.getAttribute("href"); // Хранит саму ссылку
             verifyLink(urlText, linkURL);
         }

@@ -17,7 +17,7 @@ public class StatusCodesTests extends TestBase {
     public void statusCodePositiveTest(){
         new StatusCodesPage(app.driver, app.wait)
                 .checkAllURL()
-                //.checkBrokenLinks()
+                .checkBrokenLinks()
         ;
     }
 }

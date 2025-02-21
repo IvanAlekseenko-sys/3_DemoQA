@@ -14,15 +14,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
+import java.util.List;
 
 public class BasePage {
     public WebDriver driver;
     public WebDriverWait wait;
     public JavascriptExecutor js;
-
-    //Переменная хранит счетчик ссылок
-    public int linkCounter = 0;
-    private SoftAssert softAssert = new SoftAssert();
 
     public BasePage(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
@@ -78,26 +75,41 @@ public class BasePage {
 
     }
 
+
     public boolean isElementPresent(By locator) {
-        return !driver.findElements(locator).isEmpty();
-    }
-    public boolean isElementPresent(WebElement element) {
+        List<WebElement> elements = driver.findElements(locator);
+        if (elements.isEmpty()) {
+            System.out.println("Элемент не найден по локатору: " + locator);
+            return false;
+        }
         try {
-            wait.until(ExpectedConditions.visibilityOf(element));
-            System.out.println("Element "+element.getText() + " is present: " + element.isDisplayed());
-            return element.isDisplayed();
+            // Если нужно дождаться видимости первого найденного элемента
+            wait.until(ExpectedConditions.visibilityOf(elements.get(0)));
+            System.out.println("Элемент найден: " + elements.get(0).getText() + ", видимость: " + elements.get(0).isDisplayed());
+            return elements.get(0).isDisplayed();
         } catch (Exception e) {
-            System.out.println("Element "+element.getText() + " is not present: " + e.getMessage());
+            System.out.println("Элемент найден, но не прошёл ожидание видимости: " + e.getMessage());
             return false;
         }
     }
 
-    public void verifyLink(String urlText,String urlToCheck) {
+    public boolean isElementPresent(WebElement element) {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(element));
+            System.out.println("Element " + element.getText() + " is present: " + element.isDisplayed());
+            return element.isDisplayed();
+        } catch (Exception e) {
+            System.out.println("Element " + element.getText() + " is not present: " + e.getMessage());
+            return false;
+        }
+    }
+
+    //Переменная хранит счетчик ссылок
+    public int linkCounter = 0;
+    private SoftAssert softAssert = new SoftAssert();
+
+    public void verifyLink(String urlText, String urlToCheck) {
         linkCounter++;
-
-        // 100 - 399 успех
-        // >= 400 - битая ссылка
-
         try {
             URL url = new URL(urlToCheck);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -109,22 +121,24 @@ public class BasePage {
 
                 int responseCode = connection.getResponseCode();
                 String responseMessage = connection.getResponseMessage();
+                // 100 - 399 успех
+                // >= 400 - битая ссылка
 
                 if (responseCode >= 400) {
-                    System.err.println("❌ URL #" + linkCounter + ": ["+urlText+"], URL: [" + urlToCheck + "], response code: [" + responseCode + "], message: [" + responseMessage + "] -> Broken link");
-                    softAssert.fail("❌ Broken link: [" + urlToCheck + "] Code: [" + responseCode + "] Message: [" + responseMessage + "]");
+                    System.err.println("❌ URL #" + linkCounter + ": [" + urlText + "], URL: [" + urlToCheck + "], response code: [" + responseCode + "], message: [" + responseMessage + "] -> Broken link");
+                    softAssert.fail("❌ Broken link: #" + linkCounter + ": [" + urlText + "], URL: [" + urlToCheck + "] Code: [" + responseCode + "] Message: [" + responseMessage + "]");
                 } else {
-                    System.out.println("✅ URL #" + linkCounter + ": ["+urlText+"], URL: [" + urlToCheck + "], response code: [" + responseCode + "], message: [" + responseMessage + "] -> Valid link");
+                    System.out.println("✅ URL #" + linkCounter + ": [" + urlText + "], URL: [" + urlToCheck + "], response code: [" + responseCode + "], message: [" + responseMessage + "] -> Valid link");
                 }
 
             } finally {
                 connection.disconnect(); // Закрыть соединение
             }
-
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public void assertAll() {
