@@ -21,5 +21,16 @@ public class DisappearingElementsTests extends TestBase {
         new DisappearingElementsPage(app.driver, app.wait)
                 .checkDisappearingElement("Gallery");
     }
+
+    @Test
+    public void  checkStyleButtonPositiveTest(){
+        String button = "Home";
+        new DisappearingElementsPage(app.driver, app.wait)
+                .checkStyleButton(button, "#DA4B4B", "18px", "#ececec")
+                .hoverMouseOnButton(button)
+                .checkStyleButton(button, "#000000", "20px", "#f2f2f2")
+        ;
+    }
+
 }
 

@@ -41,8 +41,10 @@ public class AddRemovePage extends BasePage {
     }
 
     public AddRemovePage verifyRemoveOfElement() {
-        isElementPresent(By.xpath("//button[.='Delete']"));
-        return this;
+        Assert.assertFalse(
+                isElementPresent(By.xpath("//button[.='Delete']")),
+                "Элемент Delete не был удалён"
+        );        return this;
     }
 }
 

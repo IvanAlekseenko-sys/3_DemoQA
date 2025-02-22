@@ -8,6 +8,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -26,6 +28,16 @@ public class BasePage {
         this.wait = wait;
         this.js = (JavascriptExecutor) driver;
         PageFactory.initElements(driver, this);
+    }
+
+    protected static void scrollToEnd() {
+        try {
+            Robot robot = new Robot();
+            robot.keyPress(KeyEvent.VK_END);
+            robot.keyPress(KeyEvent.VK_END);
+        } catch (AWTException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void click(WebElement element) {
@@ -143,5 +155,38 @@ public class BasePage {
 
     public void assertAll() {
         softAssert.assertAll();
+    }
+
+
+    public void pause(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected void scrollToCenterPageWithJS() {
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight / 2);");
+    }
+
+    public void waitForPageScrollToFinish() {
+        //* wait.until() всегда выполняется минимум два раза:
+        //= Первый вызов при старте ожидания.
+        //= Второй вызов для проверки условия выхода из do-while
+        wait.until(driver -> { //это лямбда-выражение, которое принимает driver как аргумент и выполняет код внутри {}.
+            double beforeScroll, afterScroll;
+            int count = 0; // Инициализируем счётчик
+            do {
+                beforeScroll = ((Number) js.executeScript("return window.scrollY;")).doubleValue();
+                System.out.println(beforeScroll);
+                pause(500); // Ждём короткий промежуток времени
+                afterScroll = ((Number) js.executeScript("return window.scrollY;")).doubleValue();
+                System.out.println(afterScroll);
+                System.out.println((++count) + "-я попытка подождать окончание скролла страницы.");
+            } while (beforeScroll != afterScroll); // Если скролл ещё идёт, повторяем
+
+            return true;
+        });
     }
 }
