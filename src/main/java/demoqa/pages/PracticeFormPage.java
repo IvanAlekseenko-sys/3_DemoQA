@@ -69,19 +69,18 @@ public class PracticeFormPage extends BasePage {
     WebElement yearSelect;
 
     public PracticeFormPage chooseDate(String day, String month, String year) {
-        if (day != null || month != null || year != null) {
-            click(dateOfBirthInput);
-            Select selectMonth = new Select(monthSelect);
-            selectMonth.selectByVisibleText(month);
-            Select selectYear = new Select(yearSelect);
-            selectYear.selectByVisibleText(year);
-            String dayToChoose = "//div[contains(@class,'react-datepicker__day react-datepicker__day--0" + day + "')]";
-            WebElement dayLocator = driver.findElement(By.xpath(dayToChoose));
-            click(dayLocator);
-            System.out.printf("✅ Selected date: [%s],[%s],[%s]%n", day, month, year);
-            return this;
-        } else
-            System.err.println("⛔ Введены некорректные данные");
+        if (day == null || month == null || year == null) {
+            throw new IllegalArgumentException("⛔ Введены некорректные данные");
+        }
+        click(dateOfBirthInput);
+        Select selectMonth = new Select(monthSelect);
+        selectMonth.selectByVisibleText(month);
+        Select selectYear = new Select(yearSelect);
+        selectYear.selectByVisibleText(year);
+        String dayToChoose = "//div[contains(@class,'react-datepicker__day react-datepicker__day--0" + day + "')]";
+        WebElement dayLocator = driver.findElement(By.xpath(dayToChoose));
+        click(dayLocator);
+        System.out.printf("✅ Selected date: [%s],[%s],[%s]%n", day, month, year);
         return this;
     }
 
