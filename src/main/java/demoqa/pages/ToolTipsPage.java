@@ -20,8 +20,7 @@ public class ToolTipsPage extends BasePage {
     public ToolTipsPage hoverToolTip() {
         //scrollTo(200);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", contrary);
-
-        pause();
+        pause(100);
         new Actions(driver).moveToElement(contrary).perform();
         return this;
     }

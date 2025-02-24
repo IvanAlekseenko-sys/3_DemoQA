@@ -25,7 +25,16 @@ public class BasePage {
     }
 
     public void click(WebElement element) {
+        scrollToElement(element);
         element.click();
+    }
+
+    private void scrollToElement(WebElement element) {
+        wait.until(ExpectedConditions.visibilityOf(element));
+        js.executeScript("arguments[0].scrollIntoView(true);", element);
+        waitForPageScrollToFinish();
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+
     }
 
     public void type(WebElement element, String text) {
@@ -96,7 +105,31 @@ public class BasePage {
 
     }
 
-    public void pause() {
+    public void pause(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    public void waitForPageScrollToFinish() {
+        //* wait.until() всегда выполняется минимум два раза:
+        //= Первый вызов при старте ожидания.
+        //= Второй вызов для проверки условия выхода из do-while
+        wait.until(driver -> { //это лямбда-выражение, которое принимает driver как аргумент и выполняет код внутри {}.
+            double beforeScroll, afterScroll;
+           // int count = 0; // Инициализируем счётчик
+            do {
+                beforeScroll = ((Number) js.executeScript("return window.scrollY;")).doubleValue();
+               // System.out.println(beforeScroll);
+                pause(500); // Ждём короткий промежуток времени
+                afterScroll = ((Number) js.executeScript("return window.scrollY;")).doubleValue();
+               // System.out.println(afterScroll);
+              //  System.out.println((++count) + "-я попытка подождать окончание скролла страницы.");
+            } while (beforeScroll != afterScroll); // Если скролл ещё идёт, повторяем
+
+            return true;
+        });
     }
 }

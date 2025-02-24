@@ -3,7 +3,6 @@ package demoqa.book_store;
 import demoqa.core.TestBase;
 import demoqa.pages.BookStorePage;
 import demoqa.pages.HomePage;
-import demoqa.pages.SidePanel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

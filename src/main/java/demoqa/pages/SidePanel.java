@@ -76,4 +76,30 @@ public class SidePanel extends BasePage {
         return new ToolTipsPage(driver, wait);
     }
 
+    @FindBy(xpath = "//span[.='Auto Complete']")
+    WebElement autoCompleteMenu;
+
+    public ToolTipsPage selectAutoCompleteMenu() {
+        click(autoCompleteMenu);
+        //clickWithJS(toolTips, 0, 800);
+        return new ToolTipsPage(driver, wait);
+    }
+
+
+    //* Buttons Menu
+    @FindBy(xpath = "//span[.='Buttons']")
+    WebElement buttonsMenu;
+
+    public ButtonsPage selectButtonsMenu() {
+        click(buttonsMenu);
+        return new ButtonsPage(driver, wait);
+    }
+
+    @FindBy(xpath = "//span[.='Practice Form']")
+    WebElement practiceFormMenu;
+
+    public PracticeFormPage selectPracticeFormMenu() {
+        click(practiceFormMenu);
+        return new PracticeFormPage(driver, wait);
+    }
 }

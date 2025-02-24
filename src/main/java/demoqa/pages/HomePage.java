@@ -19,25 +19,42 @@ public class HomePage extends BasePage {
         scrollTo(300);
         click(bookStore);
         //clickWithJS(bookStore, 0,200);
-        return new SidePanel(driver,wait);
+        return new SidePanel(driver, wait);
     }
 
     //* AlertsFrameWindows
     @FindBy(css = ".top-card:nth-child(3)")
     WebElement alertsFrameWindows;
+
     public BasePage getAlertFrameWindows() {
-        clickWithJS(alertsFrameWindows,0,200);
-        return new SidePanel(driver,wait);
+        clickWithJS(alertsFrameWindows, 0, 200);
+        return new SidePanel(driver, wait);
     }
 
 
     //* Widgets
     @FindBy(css = ".top-card:nth-child(4)")
     WebElement widgets;
+
     public BasePage getWidgets() {
-        clickWithJS(widgets,0,200);
-        return new SidePanel(driver,wait);
+        clickWithJS(widgets, 0, 200);
+        return new SidePanel(driver, wait);
     }
 
 
+    @FindBy(css = ".top-card:nth-child(1)")
+    WebElement elements;
+
+    public BasePage getElements() {
+        click(elements);
+        return new SidePanel(driver, wait);
+    }
+
+    @FindBy(css = ".top-card:nth-child(2)")
+    WebElement forms;
+
+    public BasePage getForms() {
+        click(forms);
+        return new SidePanel(driver, wait);
+    }
 }
