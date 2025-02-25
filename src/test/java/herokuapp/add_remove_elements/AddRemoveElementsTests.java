@@ -13,7 +13,7 @@ public class AddRemoveElementsTests extends TestBase {
         new HomePage(app.driver, app.wait).getAddRemoveElements();
     }
 
-    @Test
+    @Test(groups = {"smoke"})
     public void AddRemoveTest() {
         new AddRemovePage(app.driver, app.wait)
                 .addElement()

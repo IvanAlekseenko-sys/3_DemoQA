@@ -13,7 +13,7 @@ public class HoversTests extends TestBase {
         new HomePage(app.driver, app.wait).getHovers();
     }
 
-    @Test
+    @Test(groups = {"smoke"})
     public void hoverUserTextPositiveTest() {
         new HoversPage(app.driver, app.wait)
                 .makeHoverAppear()

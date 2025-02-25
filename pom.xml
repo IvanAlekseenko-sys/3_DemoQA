@@ -76,7 +76,15 @@
                 <suiteXmlFile>src/test/resources/data.xml</suiteXmlFile>
             </properties>
         </profile>
-
+        <profile>
+            <id>smoke</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <suiteXmlFile>src/test/resources/smoke.xml</suiteXmlFile>
+            </properties>
+        </profile>
         <profile>
             <id>login</id>
             <activation>
@@ -87,4 +95,4 @@
             </properties>
         </profile>
     </profiles>
-    </project>
+</project>

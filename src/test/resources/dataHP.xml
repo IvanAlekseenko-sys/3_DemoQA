@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="dataHM" verbose="1">
+    <test name="dataHM">
+        <parameter name="user" value="tomsmith"/>
+        <parameter name="password" value="SuperSecretPassword!"/>
+        <classes>
+            <class name="herokuapp.form_authentication.LoginTests">
+                <methods>
+                    <include name=".*Parameter.*"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

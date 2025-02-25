@@ -4,6 +4,7 @@ import herokuapp.core.TestBase;
 import herokuapp.pages.HomePage;
 import herokuapp.pages.LoginPage;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class LoginTests extends TestBase {
@@ -13,15 +14,16 @@ public class LoginTests extends TestBase {
         new HomePage(app.driver, app.wait).getAuthForm();
     }
 
-    @Test
-    public void loginPositiveTest() {
+    @Test(groups = {"smoke"})
+    @Parameters({"user","password"})
+    public void loginPositiveParameterTest(String user, String password) {
         new LoginPage(app.driver, app.wait)
-                .enterPersonalData("tomsmith", "SuperSecretPassword!")
+                .enterPersonalData(user, password)
                 .clickOnLoginButton()
                 .verifySuccessfulLogin();
     }
 
-    @Test
+    @Test(groups = {"smoke"})
     public void loginNegativePasswordTest() {
         new LoginPage(app.driver, app.wait)
                 .enterPersonalWrongPasswordData("tomsmith", "wrongPassword")
@@ -29,7 +31,7 @@ public class LoginTests extends TestBase {
                 .verifyUnSuccessfulLogin();
     }
 
-    @Test
+    @Test(groups = {"smoke"})
     public void loginNegativeEmptyFieldsTest() {
         new LoginPage(app.driver, app.wait)
                 .enterPersonalEmptyFieldsData("", "")

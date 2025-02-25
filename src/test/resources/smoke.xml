@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="SmokeSuite">
+    <test name="SmokeTests">
+        <groups>
+            <run>
+                <include name="smoke"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="herokuapp.form_authentication.LoginTests"/>
+            <class name="herokuapp.add_remove_elements.AddRemoveElementsTests"/>
+            <class name="herokuapp.hovers.HoversTests"/>
+        </classes>
+    </test>
+</suite>
